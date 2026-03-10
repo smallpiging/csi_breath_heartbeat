@@ -1,12 +1,10 @@
 import torch
-
 from unet import UNet1D, UNet2D, UNet3D
 
 residual = False
 
 torch.manual_seed(0)
 torch.set_grad_enabled(False)
-
 
 def run(model, shape):
     x_sample = torch.rand(*shape)
@@ -21,10 +19,14 @@ def test_unet_1d_residual():
         residual=True,
         in_channels=52,
         out_classes=1,
+        out_channels_first_layer=4
     ).eval()
     shape = 1, 52, 2048
     result = 1, 1, 2048
     y = run(model, shape)
+    print()
+    print(model)
+    print(y.shape)
     assert tuple(y.shape) == result
 
 def test_unet_1d():
