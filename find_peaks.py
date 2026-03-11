@@ -26,6 +26,7 @@ def generate_gaussian_mask(signal_length, peaks, sigma=3):
     return mask
 
 if 'Aligned_ECG' in df.columns:
+    df = df.iloc[300:].reset_index(drop=True)
     signal = df['Aligned_ECG'].values
 
     # 专业库处理
@@ -43,6 +44,15 @@ if 'Aligned_ECG' in df.columns:
     probability_mask = generate_gaussian_mask(len(signal), r_peaks, sigma=4)
     df['Aligned_ECG'] = probability_mask
     df.rename(columns={'Aligned_ECG': 'ECG_Heatmap_Label'}, inplace=True)
+
+    # 删除phase
+    phase_cols = [col for col in df.columns if 'phase' in col.lower()]
+
+    if len(phase_cols) > 0:
+        df.drop(columns=phase_cols, inplace=True)
+        print(f"🔪 成功砍掉 {len(phase_cols)} 列相位数据，只保留幅值！")
+    else:
+        print("⚠️ 没找到带有 phase 字眼的列，请检查你的原始 CSV 列名哦！")
     # 保存文件
     save_path = os.path.join(target_path, process_path)
     df.to_csv(save_path, index=False)

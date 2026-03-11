@@ -14,8 +14,8 @@ class CSIDataset(Dataset):
         for csv_file in csv_files:
             df = pd.read_csv(os.path.join(data_dir, csv_file))
             y_data = df['ECG_Heatmap_Label'].values
-            x_data = df.drop(columns=['WIFI_Timestamp','ECG_Heatmap_Label','Aligned_Breath','WIFI_Mean_Mag']).values
-            print(y_data.shape, x_data.shape)
+            # x_data = df.drop(columns=['WIFI_Timestamp','ECG_Heatmap_Label','Aligned_Breath','WIFI_Mean_Mag']).values
+            x_data = df.drop(columns=['ECG_Heatmap_Label']).values
             for i in range(0, len(x_data) - window_size, step):
                 self.window_x.append(x_data[i:i+window_size].T)
                 self.window_y.append(np.expand_dims(y_data[i:i+window_size], axis=0))

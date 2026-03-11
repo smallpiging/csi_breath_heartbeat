@@ -8,7 +8,7 @@ print(csv_list)
 csv_path = csv_list[0]
 
 df = pd.read_csv(os.path.join(check_path, csv_path))
-if 'ECG_Heatmap_Label' in df.columns:
+if 'CSI_Mag_15' in df.columns:
     plt.figure(figsize=(16,5))
-    plt.plot(df['ECG_Heatmap_Label'].values)
+    plt.plot(df['CSI_Mag_1'].values)
     plt.show()

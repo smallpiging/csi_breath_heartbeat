@@ -17,12 +17,12 @@ def test_unet_1d_residual():
         normalization="batch",
         preactivation=True,
         residual=True,
-        in_channels=52,
+        in_channels=104,
         out_classes=1,
         out_channels_first_layer=4
     ).eval()
-    shape = 1, 52, 2048
-    result = 1, 1, 2048
+    shape = 1, 104, 256
+    result = 1, 1, 256
     y = run(model, shape)
     print()
     print(model)

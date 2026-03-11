@@ -16,7 +16,7 @@ wavelet = 'sym5'
 level = 7  # 我们把信号过 7 层筛子
 
 if 'Aligned_ECG' in df.columns:
-    signal = df['Aligned_ECG'].values
+    signal = df['CSI_Mag_0'].values
     algo_start = time.perf_counter()
     # 1. 准备信号：去除均值（消除直流偏置，防止波形飘在天上）
     s = signal
@@ -40,7 +40,7 @@ if 'Aligned_ECG' in df.columns:
     # coeffs_heart[3] = coeffs[3]  # 保留 cD5
     coeffs_heart[4] = coeffs[4]  # 保留 cD4
     coeffs_heart[5] = coeffs[5]  # 保留 cD3
-    coeffs_heart[6] = coeffs[6]  # 保留 cD2
+    # coeffs_heart[6] = coeffs[6]  # 保留 cD2
     # 逆小波变换：拿着保留的心跳系数，倒推回时间波形
     heartbeat_clean = pywt.waverec(coeffs_heart, wavelet)
 
